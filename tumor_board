@@ -1,0 +1,27 @@
+//Pooja Gosavi
+//pigosavi
+//Tumor Board Protocol
+
+TumorBoard {
+	roles p, ph, ra, pa, tm
+	parameters out pid key, out result
+	private s, rf, bio, tis, bf, sf, sr, tf	
+
+	p -> ph: visit[out pid key]
+	
+	ph -> p: discuss[in pid, out result, out s]
+	ph -> ra: send[in pid, out s] 
+	
+	ra -> ph: send[in pid, out rf]
+	ra -> ph: recommend[in pid, out rf, out bio]
+	ra -> pa: send[in pid, in bio, out tis, out bf]
+	
+	pa -> ph: send[in pid, out sf, out sr]
+	pa -> tm: send[in pid, in bf, out sr]
+	
+	tm -> ph: inform[in pid, out tf]
+	tm -> ra: inform[in pid, in tf]
+	tm -> pa: inform[in pid, in tf]
+
+	ph -> p: discuss[in pid, in tf, out result]
+}
